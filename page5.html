@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A Voice For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+background:#050611;
+color:#fff;
+font-family:Montserrat,sans-serif;
+overflow-x:hidden
+}
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-5;
+background:
+radial-gradient(circle at 20% 20%,rgba(115,75,255,.18),transparent 32%),
+radial-gradient(circle at 80% 25%,rgba(255,76,153,.12),transparent 30%),
+radial-gradient(circle at 50% 90%,rgba(0,190,255,.12),transparent 35%)
+}
+.stars{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+background-image:
+radial-gradient(circle,rgba(255,255,255,.7) 1px,transparent 1px),
+radial-gradient(circle,rgba(255,255,255,.3) 1px,transparent 1px);
+background-size:100px 100px,170px 170px;
+opacity:.3
+}
+.page{
+position:relative;
+z-index:2
+}
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:70px 20px;
+text-align:center
+}
+.hero-inner{
+width:min(900px,100%)
+}
+.number{
+font-size:12px;
+letter-spacing:8px;
+color:#c7b4f4;
+margin-bottom:20px
+}
+h1{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(55px,10vw,105px);
+font-weight:500;
+line-height:.85;
+background:linear-gradient(120deg,#fff,#e4d4ff,#ffc1da);
+-webkit-background-clip:text;
+color:transparent
+}
+.hero-sub{
+margin:28px auto 0;
+max-width:620px;
+font-size:12px;
+line-height:2;
+letter-spacing:2px;
+color:#aaa7b9;
+text-transform:uppercase
+}
+.player{
+width:min(650px,100%);
+margin:70px auto 0;
+padding:45px 35px;
+border-radius:32px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.045);
+backdrop-filter:blur(25px);
+box-shadow:0 30px 100px rgba(0,0,0,.4)
+}
+.player-top{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+color:#c8b4f1;
+font-size:10px;
+letter-spacing:4px;
+text-transform:uppercase
+}
+.disk{
+width:125px;
+height:125px;
+border-radius:50%;
+margin:35px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+background:
+radial-gradient(circle,#090a16 0 12%,transparent 13%),
+repeating-radial-gradient(circle,rgba(255,255,255,.08) 0 2px,transparent 3px 8px),
+linear-gradient(135deg,#7651d9,#e9579a);
+box-shadow:0 0 50px rgba(170,100,255,.3);
+animation:spin 9s linear infinite paused
+}
+.disk.playing{
+animation-play-state:running
+}
+.disk span{
+font-size:30px
+}
+@keyframes spin{
+to{transform:rotate(360deg)}
+}
+.voice-title{
+font-family:"Cormorant Garamond",serif;
+font-size:32px
+}
+.voice-sub{
+font-size:11px;
+color:#888497;
+margin-top:8px
+}
+.progress{
+height:3px;
+background:rgba(255,255,255,.1);
+border-radius:10px;
+margin:30px 0 10px;
+overflow:hidden
+}
+.progress-bar{
+height:100%;
+width:0;
+background:linear-gradient(90deg,#9d73ff,#ff7cae)
+}
+.time{
+display:flex;
+justify-content:space-between;
+font-size:9px;
+color:#777486
+}
+.controls{
+display:flex;
+justify-content:center;
+gap:14px;
+margin-top:25px
+}
+.control{
+width:48px;
+height:48px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.05);
+color:#fff;
+cursor:pointer;
+font-size:17px
+}
+.control.main{
+width:62px;
+height:62px;
+background:linear-gradient(135deg,#7651d9,#d85c98);
+border:0
+}
+.hint{
+margin-top:22px;
+font-size:10px;
+letter-spacing:2px;
+color:#6f6b7c
+}
+.section{
+padding:120px 20px
+}
+.container{
+width:min(900px,100%);
+margin:auto
+}
+.label{
+text-align:center;
+font-size:10px;
+letter-spacing:6px;
+color:#bea7e9;
+text-transform:uppercase
+}
+.title{
+text-align:center;
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(42px,7vw,70px);
+font-weight:500;
+margin-top:12px
+}
+.line{
+width:70px;
+height:1px;
+background:linear-gradient(90deg,transparent,#c7a8ff,transparent);
+margin:25px auto
+}
+.intro{
+max-width:650px;
+margin:20px auto 60px;
+text-align:center;
+font-size:13px;
+line-height:2;
+color:#aaa7b8
+}
+.words{
+display:flex;
+flex-direction:column;
+gap:18px
+}
+.word{
+padding:30px;
+border-radius:22px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.035);
+opacity:0;
+transform:translateY(30px);
+transition:.8s ease
+}
+.word.show{
+opacity:1;
+transform:translateY(0)
+}
+.word-number{
+font-size:10px;
+letter-spacing:3px;
+color:#a98ce5
+}
+.word h3{
+font-family:"Cormorant Garamond",serif;
+font-size:30px;
+font-weight:500;
+margin:10px 0
+}
+.word p{
+font-size:12px;
+line-height:1.9;
+color:#aaa6b7
+}
+.quote{
+padding:120px 20px;
+text-align:center
+}
+.quote-text{
+font-family:Parisienne,cursive;
+font-size:clamp(38px,7vw,70px);
+line-height:1.3;
+color:#e8c5d9;
+max-width:850px;
+margin:auto
+}
+.quote-small{
+margin-top:25px;
+font-size:10px;
+letter-spacing:4px;
+color:#777384
+}
+.note{
+border:1px solid rgba(255,255,255,.1);
+border-radius:30px;
+padding:50px;
+background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+box-shadow:0 30px 90px rgba(0,0,0,.3)
+}
+.note h2{
+font-family:"Cormorant Garamond",serif;
+font-size:42px;
+font-weight:500
+}
+.note p{
+font-family:"Cormorant Garamond",serif;
+font-size:22px;
+line-height:1.8;
+color:#d0cbd7;
+margin-top:25px
+}
+.signature{
+font-family:Parisienne,cursive;
+font-size:38px;
+color:#dfb8d1;
+margin-top:35px
+}
+.final{
+min-height:80vh;
+padding:120px 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center
+}
+.final-inner{
+max-width:850px
+}
+.final h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(48px,8vw,85px);
+font-weight:500
+}
+.final p{
+font-size:13px;
+line-height:2;
+color:#aaa7b8;
+margin:25px auto;
+max-width:650px
+}
+.final-word{
+font-family:Parisienne,cursive;
+font-size:45px;
+color:#e6bfd7;
+margin-top:35px
+}
+.nav{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:60px
+}
+.btn{
+text-decoration:none;
+color:#fff;
+padding:14px 28px;
+border:1px solid rgba(255,255,255,.14);
+border-radius:50px;
+font-size:10px;
+letter-spacing:2px;
+background:rgba(255,255,255,.04);
+transition:.3s
+}
+.btn:hover{
+transform:translateY(-3px);
+background:rgba(255,255,255,.1)
+}
+@media(max-width:600px){
+.player{padding:35px 22px}
+.note{padding:30px 24px}
+.note p{font-size:19px}
+.word{padding:25px}
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="page">
+
+<section class="hero">
+<div class="hero-inner">
+
+<div class="number">05</div>
+
+<h1>A Voice<br>For You</h1>
+
+<div class="hero-sub">
+Some feelings are difficult to type.
+Some memories are difficult to explain.
+So this time... just listen.
+</div>
+
+<div class="player">
+
+<div class="player-top">
+<span>♡</span>
+<span>Oru Chinna Voice Note, Akka...</span>
+<span>♡</span>
+</div>
+
+<div class="disk" id="disk">
+<span>🎧</span>
+</div>
+
+<div class="voice-title">From Your Thambi</div>
+<div class="voice-sub">A little voice note made especially for you</div>
+
+<audio id="audio" src="a4.mp3"></audio>
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+<div class="time">
+<span id="current">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<div class="controls">
+<button class="control" id="back">↶</button>
+<button class="control main" id="play">▶</button>
+<button class="control" id="forward">↷</button>
+</div>
+
+<div class="hint">Put on your earphones and listen slowly ♡</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="label">Words Behind The Voice</div>
+<h2 class="title">If My Voice Could Say Everything</h2>
+<div class="line"></div>
+
+<p class="intro">
+There are some things that don't need a big explanation.
+Sometimes a few honest words are enough to remind someone how special they are.
+</p>
+
+<div class="words">
+
+<div class="word">
+<div class="word-number">01</div>
+<h3>Thank You</h3>
+<p>En life-la vandhadhukku thank you. Enakku oru akka madhiri irundhadhukku thank you. Chinna chinna moments-ai beautiful memories-ah maathinadhukku thank you.</p>
+</div>
+
+<div class="word">
+<div class="word-number">02</div>
+<h3>You Are Important</h3>
+<p>Unakku sometimes theriyama irukkalam. But you really matter. Un presence itself enakku oru comfort.</p>
+</div>
+
+<div class="word">
+<div class="word-number">03</div>
+<h3>You Are Appreciated</h3>
+<p>Nee panra chinna things kooda unnoticed-ah pogala. At least naan notice pannirukken. And I appreciate them more than I usually say.</p>
+</div>
+
+<div class="word">
+<div class="word-number">04</div>
+<h3>You Are Remembered</h3>
+<p>Oru random moment-la kooda namma pesina oru dialogue nyabagam varum. Oru place paatha oru memory varum. That's how memories work.</p>
+</div>
+
+<div class="word">
+<div class="word-number">05</div>
+<h3>You Are Special</h3>
+<p>Special-nu sollradhukku one particular reason illa. Neraya small reasons together create pannina feeling idhu.</p>
+</div>
+
+<div class="word">
+<div class="word-number">06</div>
+<h3>You Are Family</h3>
+<p>Blood relation illainaalum, heart choose pannina family madhiri sila relationships irukkum. Enakku nee appadi.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="quote">
+<div class="quote-text">
+“Sometimes a person becomes home without ever being a place.”
+</div>
+<div class="quote-small">For someone who feels like family</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="label">A Few More Words</div>
+<h2 class="title">Listen With Your Heart</h2>
+<div class="line"></div>
+
+<div class="note">
+
+<h2>My Dearest Akka,</h2>
+
+<p>
+Indha voice note-la naan sollra words vida, naan sollama vechurukkura feelings dhaan adhigam.
+</p>
+
+<p>
+Namma bond-ku perfect definition onnum illa. Sometimes akka, sometimes best friend, sometimes support system... but overall, someone very special.
+</p>
+
+<p>
+Life-la namma meet panra every person namma story-la same place edukka maataanga. Sila people short chapter. Sila people memories. Aana romba sila people mattum namma story-la permanent chapter-ah maariduvaanga.
+</p>
+
+<p>
+Enakku nee appadi oru permanent chapter.
+</p>
+
+<p>
+Un birthday-ku expensive gift kudukka mudiyama irukkalam. Big surprise kudukka mudiyama irukkalam. But indha website-la naan enakku mudinja alavukku oru small piece of my feelings save pannirukken.
+</p>
+
+<p>
+Years later indha page open pannumbodhu, indha time-la namma share pannina memories nyabagam varanum. Adhu dhaan indha whole website-oda real purpose.
+</p>
+
+<p>
+Always stay happy. Always keep smiling. Unakku deserve aagura beautiful things ellam un life-la varanum.
+</p>
+
+<div class="signature">Your Thambi — Siva</div>
+
+</div>
+</div>
+</section>
+
+<section class="quote">
+<div class="quote-text">
+“Some voices are heard by the ears. Some are remembered by the heart.”
+</div>
+<div class="quote-small">A little message from your thambi</div>
+</section>
+
+<section class="final">
+<div class="final-inner">
+
+<div class="number">05 / END</div>
+
+<h2>Thank You For Listening</h2>
+
+<p>
+Indha page-la irundha words ellam just birthday wishes illa.
+They are little reminders of how much this bond means to me.
+</p>
+
+<div class="final-word">
+You will always be special to me. 🤍
+</div>
+
+<div class="nav">
+<a href="page4.html" class="btn">← Previous</a>
+<a href="page6.html" class="btn">Next Chapter →</a>
+</div>
+
+</div>
+</section>
+
+</div>
+
+<script>
+const audio=document.getElementById("audio");
+const play=document.getElementById("play");
+const back=document.getElementById("back");
+const forward=document.getElementById("forward");
+const progress=document.getElementById("progress");
+const current=document.getElementById("current");
+const duration=document.getElementById("duration");
+const disk=document.getElementById("disk");
+
+function formatTime(sec){
+if(isNaN(sec))return"0:00";
+let m=Math.floor(sec/60);
+let s=Math.floor(sec%60);
+return m+":"+(s<10?"0":"")+s;
+}
+
+audio.addEventListener("loadedmetadata",()=>{
+duration.textContent=formatTime(audio.duration);
+});
+
+play.addEventListener("click",()=>{
+if(audio.paused){
+audio.play();
+play.textContent="❚❚";
+disk.classList.add("playing");
+}else{
+audio.pause();
+play.textContent="▶";
+disk.classList.remove("playing");
+}
+});
+
+audio.addEventListener("timeupdate",()=>{
+current.textContent=formatTime(audio.currentTime);
+let percent=(audio.currentTime/audio.duration)*100;
+progress.style.width=percent+"%";
+});
+
+audio.addEventListener("ended",()=>{
+play.textContent="▶";
+disk.classList.remove("playing");
+progress.style.width="0%";
+});
+
+back.addEventListener("click",()=>{
+audio.currentTime=Math.max(0,audio.currentTime-10);
+});
+
+forward.addEventListener("click",()=>{
+audio.currentTime=Math.min(audio.duration,audio.currentTime+10);
+});
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:.15});
+
+document.querySelectorAll(".word").forEach((el,i)=>{
+el.style.transitionDelay=(i*.08)+"s";
+observer.observe(el);
+});
+</script>
+
+</body>
+</html>

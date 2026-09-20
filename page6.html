@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ten Little Things</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+background:#050611;
+color:#fff;
+font-family:Montserrat,sans-serif;
+overflow-x:hidden
+}
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-5;
+background:
+radial-gradient(circle at 15% 15%,rgba(126,80,255,.2),transparent 32%),
+radial-gradient(circle at 85% 25%,rgba(255,75,155,.13),transparent 30%),
+radial-gradient(circle at 50% 90%,rgba(0,190,255,.1),transparent 35%)
+}
+.stars{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+background-image:
+radial-gradient(circle,rgba(255,255,255,.75) 1px,transparent 1px),
+radial-gradient(circle,rgba(255,255,255,.3) 1px,transparent 1px);
+background-size:95px 95px,165px 165px;
+opacity:.32
+}
+.page{
+position:relative;
+z-index:2
+}
+.hero{
+min-height:100vh;
+padding:80px 20px 100px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center
+}
+.hero-inner{
+width:min(950px,100%)
+}
+.number{
+font-size:12px;
+letter-spacing:8px;
+color:#c8b2f2;
+margin-bottom:20px
+}
+h1{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(58px,10vw,110px);
+font-weight:500;
+line-height:.83;
+background:linear-gradient(120deg,#fff,#e7d8ff,#ffc2da);
+-webkit-background-clip:text;
+color:transparent
+}
+.hero-sub{
+max-width:650px;
+margin:28px auto 0;
+font-size:12px;
+line-height:2;
+letter-spacing:2px;
+color:#aaa6b9;
+text-transform:uppercase
+}
+.orbit{
+width:270px;
+height:270px;
+border:1px solid rgba(214,180,255,.12);
+border-radius:50%;
+margin:65px auto 0;
+position:relative;
+animation:rotate 20s linear infinite
+}
+.orbit:before{
+content:"";
+position:absolute;
+inset:35px;
+border:1px solid rgba(255,255,255,.07);
+border-radius:50%
+}
+.orbit-dot{
+position:absolute;
+width:13px;
+height:13px;
+border-radius:50%;
+background:#d7b7ff;
+box-shadow:0 0 25px #bd8cff;
+top:-6px;
+left:50%;
+transform:translateX(-50%)
+}
+.orbit-text{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:"Cormorant Garamond",serif;
+font-size:27px;
+animation:counter 20s linear infinite
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+@keyframes counter{to{transform:rotate(-360deg)}}
+.section{
+padding:120px 20px
+}
+.container{
+width:min(1000px,100%);
+margin:auto
+}
+.label{
+text-align:center;
+font-size:10px;
+letter-spacing:6px;
+color:#bda6e9;
+text-transform:uppercase
+}
+.title{
+text-align:center;
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(43px,7vw,72px);
+font-weight:500;
+margin-top:12px
+}
+.line{
+width:70px;
+height:1px;
+margin:25px auto;
+background:linear-gradient(90deg,transparent,#c4a5f7,transparent)
+}
+.intro{
+max-width:650px;
+margin:20px auto 65px;
+text-align:center;
+color:#aaa6b8;
+font-size:13px;
+line-height:2
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:22px
+}
+.card{
+min-height:250px;
+perspective:1000px;
+cursor:pointer;
+opacity:0;
+transform:translateY(30px);
+transition:.8s
+}
+.card.show{
+opacity:1;
+transform:translateY(0)
+}
+.card-inner{
+width:100%;
+height:100%;
+min-height:250px;
+position:relative;
+transition:transform .8s;
+transform-style:preserve-3d
+}
+.card.active .card-inner{
+transform:rotateY(180deg)
+}
+.face{
+position:absolute;
+inset:0;
+backface-visibility:hidden;
+border:1px solid rgba(255,255,255,.1);
+border-radius:26px;
+background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+padding:32px;
+display:flex;
+flex-direction:column;
+justify-content:space-between
+}
+.back{
+transform:rotateY(180deg);
+background:linear-gradient(145deg,rgba(135,88,220,.15),rgba(255,91,153,.07))
+}
+.card-number{
+font-size:10px;
+letter-spacing:4px;
+color:#b99ce8
+}
+.card-icon{
+font-size:38px;
+margin:15px 0
+}
+.card h3{
+font-family:"Cormorant Garamond",serif;
+font-size:32px;
+font-weight:500
+}
+.card p{
+font-size:12px;
+line-height:1.8;
+color:#aaa6b7
+}
+.tap{
+font-size:9px;
+letter-spacing:2px;
+color:#716c7d;
+text-transform:uppercase
+}
+.quote{
+padding:120px 20px;
+text-align:center
+}
+.quote-text{
+max-width:850px;
+margin:auto;
+font-family:Parisienne,cursive;
+font-size:clamp(40px,7vw,72px);
+line-height:1.3;
+color:#e8c6d9
+}
+.quote-small{
+margin-top:25px;
+font-size:10px;
+letter-spacing:4px;
+color:#777282
+}
+.timeline{
+max-width:800px;
+margin:auto;
+position:relative
+}
+.timeline:before{
+content:"";
+position:absolute;
+left:20px;
+top:0;
+bottom:0;
+width:1px;
+background:linear-gradient(#8f67dd,transparent)
+}
+.event{
+position:relative;
+padding:0 0 55px 65px;
+opacity:0;
+transform:translateX(-25px);
+transition:.8s
+}
+.event.show{
+opacity:1;
+transform:translateX(0)
+}
+.dot{
+position:absolute;
+left:14px;
+top:4px;
+width:13px;
+height:13px;
+border-radius:50%;
+background:#b895f3;
+box-shadow:0 0 18px rgba(190,145,255,.8)
+}
+.event h3{
+font-family:"Cormorant Garamond",serif;
+font-size:30px;
+font-weight:500
+}
+.event p{
+margin-top:8px;
+font-size:12px;
+line-height:1.9;
+color:#aaa6b7
+}
+.final{
+min-height:85vh;
+padding:120px 20px 80px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center
+}
+.final-inner{
+max-width:850px
+}
+.final h2{
+font-family:"Cormorant Garamond",serif;
+font-size:clamp(50px,9vw,90px);
+font-weight:500
+}
+.final p{
+max-width:650px;
+margin:25px auto;
+font-size:13px;
+line-height:2;
+color:#aaa6b8
+}
+.signature{
+font-family:Parisienne,cursive;
+font-size:48px;
+color:#e7bfd5;
+margin-top:35px
+}
+.nav{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:60px
+}
+.btn{
+text-decoration:none;
+color:#fff;
+padding:14px 28px;
+border:1px solid rgba(255,255,255,.14);
+border-radius:50px;
+font-size:10px;
+letter-spacing:2px;
+background:rgba(255,255,255,.04);
+transition:.3s
+}
+.btn:hover{
+transform:translateY(-3px);
+background:rgba(255,255,255,.1)
+}
+@media(max-width:700px){
+.grid{grid-template-columns:1fr}
+.card{min-height:230px}
+.card-inner{min-height:230px}
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="page">
+
+<section class="hero">
+<div class="hero-inner">
+
+<div class="number">06</div>
+
+<h1>Ten Little<br>Things</h1>
+
+<div class="hero-sub">
+Ten things about our bond that I may not say every day...
+but I hope you always know.
+</div>
+
+<div class="orbit">
+<div class="orbit-dot"></div>
+<div class="orbit-text">Our Bond ♡</div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="label">Tap Every Card</div>
+
+<h2 class="title">10 Things About Us</h2>
+
+<div class="line"></div>
+
+<p class="intro">
+Each card has a little message hidden inside.
+Tap it, turn it over, and read it slowly.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">01</div>
+<div class="card-icon">🤍</div>
+<h3>Comfort</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">01 / COMFORT</div>
+<p>Un kitta pesumbodhu sometimes words perfect-ah irukkanum-nu yosikka vendiyadhu illa. That comfort itself is special.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">02</div>
+<div class="card-icon">✨</div>
+<h3>Understanding</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">02 / UNDERSTANDING</div>
+<p>Everything explain panna mudiyama irukkumbodhu kooda, sometimes you understand the feeling behind the words.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">03</div>
+<div class="card-icon">🌙</div>
+<h3>Peace</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">03 / PEACE</div>
+<p>Some conversations make noise. Some conversations make peace. Namma conversations often feel like the second one.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">04</div>
+<div class="card-icon">😂</div>
+<h3>Laughter</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">04 / LAUGHTER</div>
+<p>Random jokes, silly moments, unexpected laughs... these are the memories that make an ordinary day beautiful.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">05</div>
+<div class="card-icon">🌷</div>
+<h3>Kindness</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">05 / KINDNESS</div>
+<p>Chinna kindness kooda someone's day-ah change pannalam. Un little caring moments enakku always memorable.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">06</div>
+<div class="card-icon">🫶</div>
+<h3>Support</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">06 / SUPPORT</div>
+<p>Sometimes advice venam. Just someone being there is enough. And that kind of presence matters.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">07</div>
+<div class="card-icon">🌟</div>
+<h3>Memories</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">07 / MEMORIES</div>
+<p>Big moments mattum illa. Small conversations and ordinary days also become beautiful memories.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">08</div>
+<div class="card-icon">🏡</div>
+<h3>Family</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">08 / FAMILY</div>
+<p>Blood relation illa naalum, heart sometimes chooses its own family. Enakku nee appadi oru person.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">09</div>
+<div class="card-icon">💫</div>
+<h3>Special</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">09 / SPECIAL</div>
+<p>Special people are not always the loudest people in our lives. Sometimes they quietly become the most important.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-inner">
+<div class="face">
+<div class="card-number">10</div>
+<div class="card-icon">💖</div>
+<h3>Forever Special</h3>
+<div class="tap">Tap to open</div>
+</div>
+<div class="face back">
+<div class="card-number">10 / FOREVER SPECIAL</div>
+<p>Years change. Places change. Life changes. But some bonds remain special because of what they meant to us.</p>
+<div class="tap">Tap to close</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="quote">
+<div class="quote-text">
+“Not every beautiful relationship needs a name. Some just need a place in the heart.”
+</div>
+<div class="quote-small">Our little story</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="label">The Little Things</div>
+
+<h2 class="title">What Makes This Bond Special</h2>
+
+<div class="line"></div>
+
+<div class="timeline">
+
+<div class="event">
+<div class="dot"></div>
+<h3>The Beginning</h3>
+<p>Oru normal meeting-ah start aana relationship, later life-la special place edukka mudiyum-nu appo theriyadhu.</p>
+</div>
+
+<div class="event">
+<div class="dot"></div>
+<h3>The Conversations</h3>
+<p>Little conversations slowly became familiar moments. Familiar moments slowly became memories.</p>
+</div>
+
+<div class="event">
+<div class="dot"></div>
+<h3>The Understanding</h3>
+<p>Over time, words vida feelings purinjukka aarambichadhu. That's where a simple connection becomes a real bond.</p>
+</div>
+
+<div class="event">
+<div class="dot"></div>
+<h3>The Memories</h3>
+<p>Today, there are so many tiny moments that make me smile whenever I remember them.</p>
+</div>
+
+<div class="event">
+<div class="dot"></div>
+<h3>The Bond</h3>
+<p>And somewhere between all those little moments, you became someone I can genuinely call my Akka.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="quote">
+<div class="quote-text">
+“You became family without sharing my blood, and that is what makes our bond beautiful.”
+</div>
+<div class="quote-small">From your thambi</div>
+</section>
+
+<section class="final">
+<div class="final-inner">
+
+<div class="number">06 / END</div>
+
+<h2>Ten Things.<br>One Special Bond.</h2>
+
+<p>
+If I had to write every reason why you are special,
+ten cards would never be enough.
+There will always be another memory,
+another little reason,
+another moment worth remembering.
+</p>
+
+<div class="signature">
+Always my favourite Akka 🤍
+</div>
+
+<div class="nav">
+<a href="page5.html" class="btn">← Previous</a>
+<a href="page7.html" class="btn">Next Chapter →</a>
+</div>
+
+</div>
+</section>
+
+</div>
+
+<script>
+const cards=document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+card.addEventListener("click",()=>{
+card.classList.toggle("active");
+});
+});
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:.15});
+
+document.querySelectorAll(".card,.event").forEach((el,i)=>{
+el.style.transitionDelay=(i*.06)+"s";
+observer.observe(el);
+});
+</script>
+
+</body>
+</html>

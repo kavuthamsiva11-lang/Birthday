@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 10 | Always With You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#05060d;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 15% 20%,rgba(120,80,255,.16),transparent 30%),
+        radial-gradient(circle at 85% 30%,rgba(0,220,255,.10),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(255,80,180,.10),transparent 35%);
+    pointer-events:none;
+    z-index:-5;
+}
+
+canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:-4;
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent);
+    pointer-events:none;
+    z-index:-3;
+}
+
+.vignette{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,transparent 35%,rgba(0,0,0,.65) 100%);
+    pointer-events:none;
+    z-index:-2;
+}
+
+.aurora{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.15;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.a1{
+    background:#8b5cf6;
+    top:-200px;
+    left:-150px;
+    animation:aurora1 12s infinite alternate;
+}
+
+.a2{
+    background:#06b6d4;
+    right:-200px;
+    top:35%;
+    animation:aurora2 14s infinite alternate;
+}
+
+.a3{
+    background:#ec4899;
+    bottom:-250px;
+    left:35%;
+    animation:aurora3 16s infinite alternate;
+}
+
+@keyframes aurora1{
+    to{transform:translate(180px,120px) scale(1.3)}
+}
+
+@keyframes aurora2{
+    to{transform:translate(-150px,100px) scale(1.25)}
+}
+
+@keyframes aurora3{
+    to{transform:translate(100px,-120px) scale(1.2)}
+}
+
+.container{
+    width:min(1150px,92%);
+    margin:auto;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:80px 20px;
+}
+
+.hero-content{
+    max-width:900px;
+    animation:heroIn 1.5s ease forwards;
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.page-number{
+    font-size:13px;
+    letter-spacing:7px;
+    text-transform:uppercase;
+    color:#b9b1ff;
+    margin-bottom:28px;
+}
+
+.hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(70px,12vw,150px);
+    font-weight:500;
+    line-height:.75;
+    letter-spacing:-5px;
+    background:linear-gradient(120deg,#fff,#ddd6fe,#fff,#a5f3fc);
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shine 7s infinite linear;
+}
+
+@keyframes shine{
+    to{background-position:300% center}
+}
+
+.hero h2{
+    margin-top:25px;
+    font-family:'Parisienne',cursive;
+    font-size:clamp(40px,7vw,75px);
+    font-weight:400;
+    color:#f9a8d4;
+}
+
+.hero p{
+    max-width:680px;
+    margin:35px auto 0;
+    color:#b7b7c7;
+    line-height:2;
+    font-size:15px;
+}
+
+.scroll{
+    position:absolute;
+    bottom:35px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#888;
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+.scroll span{
+    display:block;
+    width:1px;
+    height:50px;
+    background:linear-gradient(#aaa,transparent);
+    margin:15px auto 0;
+    animation:scrollLine 1.5s infinite;
+}
+
+@keyframes scrollLine{
+    50%{transform:translateY(12px)}
+}
+
+section{
+    padding:120px 0;
+    position:relative;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:65px;
+}
+
+.section-number{
+    font-size:11px;
+    letter-spacing:6px;
+    color:#9b8cff;
+    margin-bottom:18px;
+    text-transform:uppercase;
+}
+
+.section-title h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(45px,7vw,75px);
+    font-weight:500;
+}
+
+.section-title p{
+    color:#888;
+    margin-top:15px;
+    line-height:1.8;
+}
+
+.promise-wrap{
+    display:flex;
+    justify-content:center;
+}
+
+.promise-card{
+    width:min(800px,100%);
+    padding:65px 45px;
+    border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+    backdrop-filter:blur(25px);
+    border-radius:35px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 30px 100px rgba(0,0,0,.35);
+}
+
+.promise-card:before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:rgba(168,85,247,.12);
+    filter:blur(50px);
+    top:-150px;
+    left:-100px;
+}
+
+.promise-icon{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 35px;
+    font-size:40px;
+    box-shadow:0 0 50px rgba(168,85,247,.2);
+}
+
+.promise-card h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:45px;
+    font-weight:500;
+}
+
+.promise-card .small{
+    color:#a5a5b0;
+    margin:15px 0 30px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:11px;
+}
+
+.promise-card .main-line{
+    font-family:'Cormorant Garamond',serif;
+    font-size:28px;
+    line-height:1.5;
+    color:#eee;
+    max-width:650px;
+    margin:auto;
+}
+
+.promise-btn{
+    margin-top:40px;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.06);
+    color:white;
+    padding:16px 30px;
+    border-radius:50px;
+    cursor:pointer;
+    font-family:inherit;
+    letter-spacing:1px;
+    transition:.4s;
+}
+
+.promise-btn:hover{
+    background:white;
+    color:#080812;
+    transform:translateY(-4px);
+    box-shadow:0 15px 40px rgba(255,255,255,.15);
+}
+
+.promise-reveal{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:1s ease;
+}
+
+.promise-reveal.show{
+    max-height:400px;
+    opacity:1;
+    margin-top:45px;
+}
+
+.promise-reveal h4{
+    font-family:'Parisienne',cursive;
+    font-size:55px;
+    color:#f9a8d4;
+    font-weight:400;
+}
+
+.promise-reveal p{
+    color:#aaa;
+    line-height:2;
+    margin-top:15px;
+}
+
+.audio-section{
+    display:flex;
+    justify-content:center;
+}
+
+.audio-card{
+    width:min(800px,100%);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(25px);
+    border-radius:35px;
+    padding:45px;
+    text-align:center;
+}
+
+.disk{
+    width:150px;
+    height:150px;
+    margin:0 auto 30px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle,#f9a8d4 0 7%,#111 8% 14%,#222 15% 25%,#090909 26% 100%);
+    border:8px solid #15151d;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.15),
+        0 0 60px rgba(236,72,153,.18);
+    position:relative;
+}
+
+.disk:after{
+    content:"♡";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:28px;
+}
+
+.disk.playing{
+    animation:spin 4s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.audio-card h3{
+    font-family:'Cormorant Garamond',serif;
+    font-size:38px;
+    font-weight:500;
+}
+
+.audio-card .audio-sub{
+    color:#888;
+    margin:8px 0 30px;
+}
+
+.audio-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.control{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.control:hover{
+    background:#fff;
+    color:#111;
+}
+
+.play{
+    width:60px;
+    height:60px;
+    font-size:18px;
+}
+
+.progress-area{
+    margin-top:30px;
+}
+
+.progress{
+    width:100%;
+    height:4px;
+    appearance:none;
+    background:rgba(255,255,255,.15);
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.progress::-webkit-slider-thumb{
+    appearance:none;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:#f9a8d4;
+}
+
+.time{
+    display:flex;
+    justify-content:space-between;
+    color:#777;
+    font-size:11px;
+    margin-top:10px;
+}
+
+.audio-note{
+    margin-top:25px;
+    font-family:'Parisienne',cursive;
+    font-size:28px;
+    color:#f9a8d4;
+}
+
+.audio-from{
+    margin-top:8px;
+    color:#777;
+    font-size:12px;
+}
+
+.message-section{
+    display:flex;
+    justify-content:center;
+}
+
+.message{
+    width:min(850px,100%);
+    padding:65px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.11);
+    border-radius:35px;
+    backdrop-filter:blur(25px);
+    position:relative;
+}
+
+.message:before{
+    content:"“";
+    position:absolute;
+    top:15px;
+    left:30px;
+    font-family:Georgia,serif;
+    font-size:100px;
+    color:rgba(249,168,212,.15);
+}
+
+.message h3{
+    text-align:center;
+    font-family:'Parisienne',cursive;
+    font-size:50px;
+    font-weight:400;
+    color:#f9a8d4;
+    margin-bottom:40px;
+}
+
+.message p{
+    color:#bdbdc7;
+    line-height:2.1;
+    font-size:15px;
+    margin-bottom:22px;
+}
+
+.message .highlight{
+    color:#fff;
+    font-family:'Cormorant Garamond',serif;
+    font-size:26px;
+    text-align:center;
+    margin:35px 0;
+}
+
+.signature{
+    text-align:right;
+    margin-top:40px;
+    font-family:'Parisienne',cursive;
+    font-size:35px;
+    color:#f9a8d4;
+}
+
+.final{
+    min-height:85vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.final-box{
+    max-width:800px;
+}
+
+.final-small{
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:#9386ff;
+    margin-bottom:25px;
+}
+
+.final h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(55px,9vw,100px);
+    font-weight:500;
+    line-height:.95;
+}
+
+.final-script{
+    font-family:'Parisienne',cursive;
+    font-size:55px;
+    color:#f9a8d4;
+    margin-top:25px;
+}
+
+.final p{
+    color:#888;
+    line-height:2;
+    margin:30px auto;
+    max-width:600px;
+}
+
+.nav{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:40px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.05);
+    padding:14px 28px;
+    border-radius:50px;
+    transition:.4s;
+    font-size:13px;
+}
+
+.nav-btn:hover{
+    background:#fff;
+    color:#080812;
+    transform:translateY(-3px);
+}
+
+.heart{
+    position:fixed;
+    color:#f9a8d4;
+    pointer-events:none;
+    opacity:0;
+    animation:floatHeart 5s linear forwards;
+    z-index:10;
+}
+
+@keyframes floatHeart{
+    0%{
+        opacity:0;
+        transform:translateY(20px) scale(.6) rotate(0);
+    }
+    15%{opacity:.7}
+    100%{
+        opacity:0;
+        transform:translateY(-100vh) scale(1.2) rotate(180deg);
+    }
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+footer{
+    text-align:center;
+    padding:40px 20px;
+    color:#555;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+@media(max-width:700px){
+
+    .hero{
+        min-height:90vh;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    section{
+        padding:80px 0;
+    }
+
+    .promise-card,
+    .audio-card,
+    .message{
+        padding:35px 22px;
+    }
+
+    .promise-card h3{
+        font-size:36px;
+    }
+
+    .promise-card .main-line{
+        font-size:23px;
+    }
+
+    .promise-reveal h4{
+        font-size:43px;
+    }
+
+    .audio-card h3{
+        font-size:32px;
+    }
+
+    .message h3{
+        font-size:42px;
+    }
+
+    .message p{
+        font-size:14px;
+        line-height:2;
+    }
+
+    .final-script{
+        font-size:43px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="grid"></div>
+<div class="vignette"></div>
+
+<div class="aurora a1"></div>
+<div class="aurora a2"></div>
+<div class="aurora a3"></div>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="page-number">The Last Secret • 10</div>
+
+        <h1>Naan Eppovume</h1>
+
+        <h2>Irupen Thangameyy...</h2>
+
+        <p>
+            Life eppadi maarinalum,
+            days eppadi pass aanaalum,
+            distance eppadi vandhaalum...
+            oru vishayam mattum maaradhu.
+        </p>
+    </div>
+
+    <div class="scroll">
+        Scroll Slowly
+        <span></span>
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+
+        <div class="section-title reveal">
+            <div class="section-number">One Promise</div>
+
+            <h2>A Promise From Your Thambi</h2>
+
+            <p>
+                Sila promises words-la mattum irukka koodadhu...
+                heart-la irukkanum.
+            </p>
+        </div>
+
+        <div class="promise-wrap">
+
+            <div class="promise-card reveal">
+
+                <div class="promise-icon">♡</div>
+
+                <h3>One Promise</h3>
+
+                <div class="small">
+                    From My Heart
+                </div>
+
+                <div class="main-line">
+                    “Whatever happens,
+                    you will never have to wonder
+                    whether your thambi cares.”
+                </div>
+
+                <button class="promise-btn" id="promiseBtn">
+                    Click To Open My Promise
+                </button>
+
+                <div class="promise-reveal" id="promiseReveal">
+
+                    <h4>
+                        I Am Always With You, Thangoo 🤍
+                    </h4>
+
+                    <p>
+                        Namma life-la circumstances maaralam...
+                        days maaralam...
+                        namma surroundings maaralam...
+                        aana nee enakku important-ah irukkura
+                        place maaradhu.
+                    </p>
+
+                    <p>
+                        Happy moments-la irundhaalum,
+                        difficult moments-la irundhaalum,
+                        un happiness-ku genuinely happy aagura
+                        oru thambi always iruppan.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="section-number">
+                A Little Voice
+            </div>
+
+            <h2>Listen Slowly...</h2>
+
+            <p>
+                Words sometimes feel different when they are heard.
+            </p>
+
+        </div>
+
+        <div class="audio-section">
+
+            <div class="audio-card reveal">
+
+                <div class="disk" id="disk"></div>
+
+                <h3>
+                    A Little Voice From Me
+                </h3>
+
+                <div class="audio-sub">
+                    Put on your earphones and listen slowly ♡
+                </div>
+
+                <audio id="audio" src="a1.mpeg"></audio>
+
+                <div class="audio-controls">
+
+                    <button class="control" id="back">
+                        ↶
+                    </button>
+
+                    <button class="control play" id="play">
+                        ▶
+                    </button>
+
+                    <button class="control" id="forward">
+                        ↷
+                    </button>
+
+                </div>
+
+                <div class="progress-area">
+
+                    <input
+                        type="range"
+                        id="progress"
+                        class="progress"
+                        min="0"
+                        max="100"
+                        value="0"
+                    >
+
+                    <div class="time">
+                        <span id="current">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+
+                </div>
+
+                <div class="audio-note">
+                    Oru Chinna Voice Note, Akka...
+                </div>
+
+                <div class="audio-from">
+                    From your thambi — just for you
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title reveal">
+
+            <div class="section-number">
+                From My Heart
+            </div>
+
+            <h2>One Final Message</h2>
+
+            <p>
+                Idha just read pannama...
+                konjam feel pannitu read pannu.
+            </p>
+
+        </div>
+
+        <div class="message-section">
+
+            <div class="message reveal">
+
+                <h3>
+                    Thangameyy...
+                </h3>
+
+                <p>
+                    Sila relationships-ku explanation theva illa.
+                    Eppadi start aachu, eppo close aachu,
+                    eppadi ivlo important aachu-nu exact-ah
+                    solla mudiyadhu.
+                </p>
+
+                <p>
+                    Nee enakku appadi oru person.
+                </p>
+
+                <p>
+                    Namma blood relation illa.
+                    Aana adhu namma bond-a less special-a make pannala.
+                    Sometimes heart choose panra relationships
+                    dhaan romba beautiful-ah irukkum.
+                </p>
+
+                <p>
+                    Namma conversations,
+                    random laughs,
+                    silly moments,
+                    little arguments,
+                    understanding,
+                    support...
+                    ivlo small-small things dhaan
+                    namma bond-ku meaning kuduthadhu.
+                </p>
+
+                <div class="highlight">
+                    “Nee en life-la oru memory mattum illa...
+                    oru beautiful part.”
+                </div>
+
+                <p>
+                    Unakku life-la neraya happiness kidaikkanum.
+                    Nee dream panra things ellam gradually
+                    achieve aaganum.
+                    Unakku peace irukkanum.
+                    Unna genuinely value panra people
+                    un life-la irukkanum.
+                </p>
+
+                <p>
+                    Eppovume un smile genuine-ah irukkanum.
+                    Un heart peaceful-ah irukkanum.
+                    And whatever happens,
+                    nee alone-ah feel panna koodadhu.
+                </p>
+
+                <p>
+                    Nee enakku always special.
+                    Adhu oru birthday feeling mattum illa.
+                    Adhu namma bond-ku irukkura
+                    oru permanent place.
+                </p>
+
+                <div class="highlight">
+                    “Naan eppovume iruppen, Thangameyy.”
+                </div>
+
+                <p>
+                    Idhu oru dramatic dialogue illa...
+                    idhu naan unakku kudukkura
+                    oru small promise.
+                </p>
+
+                <p>
+                    Life namma rendu perai different directions-la
+                    kondu ponaalum,
+                    memories maaradhu.
+                    Namma bond-oda value maaradhu.
+                </p>
+
+                <p>
+                    So whenever you look back at this page,
+                    just remember one thing...
+                    somewhere,
+                    your thambi is always wishing
+                    the best for you.
+                </p>
+
+                <p>
+                    Happy Birthday once again, Akka.
+                    Stay happy.
+                    Stay peaceful.
+                    Keep smiling.
+                </p>
+
+                <div class="signature">
+                    Always Your Thambi — Siva 🤍
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="final">
+
+    <div class="final-box reveal">
+
+        <div class="final-small">
+            This Is Not Goodbye
+        </div>
+
+        <h2>
+            Always<br>
+            Your Thambi
+        </h2>
+
+        <div class="final-script">
+            I Am Always With You
+        </div>
+
+        <p>
+            Page 1-la start aana story...
+            Page 10-la mudiyala.
+            Idhu just one small reminder mattum —
+            namma bond enakku eppovume special.
+        </p>
+
+        <div class="final-script">
+            I am always with you, Thangoo. 🤍
+        </div>
+
+        <div class="nav">
+
+            <a href="page8.html" class="nav-btn">
+                ← Previous
+            </a>
+
+            <a href="page9.html" class="nav-btn">
+                Grand Finale
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    MADE WITH LOVE • FROM YOUR THAMBI
+</footer>
+
+
+<script>
+
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+
+function resizeCanvas(){
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    stars = [];
+
+    for(let i=0;i<160;i++){
+
+        stars.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            r:Math.random()*1.5+.2,
+            a:Math.random(),
+            speed:Math.random()*.015+.003
+        });
+
+    }
+
+}
+
+resizeCanvas();
+
+window.addEventListener("resize",resizeCanvas);
+
+function drawStars(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    stars.forEach(s=>{
+
+        s.a += s.speed;
+
+        let alpha =
+            .35 +
+            Math.sin(s.a)*.3;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            s.x,
+            s.y,
+            s.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            `rgba(255,255,255,${alpha})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(drawStars);
+
+}
+
+drawStars();
+
+
+const promiseBtn =
+    document.getElementById("promiseBtn");
+
+const promiseReveal =
+    document.getElementById("promiseReveal");
+
+promiseBtn.addEventListener("click",()=>{
+
+    promiseReveal.classList.toggle("show");
+
+    if(promiseReveal.classList.contains("show")){
+
+        promiseBtn.innerHTML =
+            "My Promise Is Always Open ♡";
+
+        createHeartBurst();
+
+    }else{
+
+        promiseBtn.innerHTML =
+            "Click To Open My Promise";
+
+    }
+
+});
+
+
+const audio =
+    document.getElementById("audio");
+
+const play =
+    document.getElementById("play");
+
+const back =
+    document.getElementById("back");
+
+const forward =
+    document.getElementById("forward");
+
+const progress =
+    document.getElementById("progress");
+
+const current =
+    document.getElementById("current");
+
+const duration =
+    document.getElementById("duration");
+
+const disk =
+    document.getElementById("disk");
+
+
+function formatTime(seconds){
+
+    if(isNaN(seconds)) return "0:00";
+
+    let min =
+        Math.floor(seconds/60);
+
+    let sec =
+        Math.floor(seconds%60);
+
+    if(sec<10) sec="0"+sec;
+
+    return min+":"+sec;
+
+}
+
+
+play.addEventListener("click",()=>{
+
+    if(audio.paused){
+
+        audio.play();
+
+    }else{
+
+        audio.pause();
+
+    }
+
+});
+
+
+audio.addEventListener("play",()=>{
+
+    play.innerHTML="Ⅱ";
+
+    disk.classList.add("playing");
+
+});
+
+
+audio.addEventListener("pause",()=>{
+
+    play.innerHTML="▶";
+
+    disk.classList.remove("playing");
+
+});
+
+
+audio.addEventListener("loadedmetadata",()=>{
+
+    duration.textContent =
+        formatTime(audio.duration);
+
+});
+
+
+audio.addEventListener("timeupdate",()=>{
+
+    if(audio.duration){
+
+        progress.value =
+            (audio.currentTime/audio.duration)*100;
+
+    }
+
+    current.textContent =
+        formatTime(audio.currentTime);
+
+});
+
+
+progress.addEventListener("input",()=>{
+
+    if(audio.duration){
+
+        audio.currentTime =
+            (progress.value/100)*audio.duration;
+
+    }
+
+});
+
+
+back.addEventListener("click",()=>{
+
+    audio.currentTime =
+        Math.max(0,audio.currentTime-10);
+
+});
+
+
+forward.addEventListener("click",()=>{
+
+    audio.currentTime =
+        Math.min(audio.duration,audio.currentTime+10);
+
+});
+
+
+function createHeart(){
+
+    const heart =
+        document.createElement("div");
+
+    heart.className="heart";
+
+    heart.innerHTML =
+        Math.random()>.5 ? "♡" : "♥";
+
+    heart.style.left =
+        Math.random()*100+"vw";
+
+    heart.style.bottom =
+        "-30px";
+
+    heart.style.fontSize =
+        (12+Math.random()*18)+"px";
+
+    heart.style.animationDuration =
+        (4+Math.random()*4)+"s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },8000);
+
+}
+
+
+setInterval(createHeart,1200);
+
+
+function createHeartBurst(){
+
+    for(let i=0;i<18;i++){
+
+        setTimeout(()=>{
+
+            const heart =
+                document.createElement("div");
+
+            heart.className="heart";
+
+            heart.innerHTML="♥";
+
+            heart.style.left =
+                (45+Math.random()*10)+"vw";
+
+            heart.style.bottom =
+                "45vh";
+
+            heart.style.fontSize =
+                (14+Math.random()*20)+"px";
+
+            heart.style.animationDuration =
+                (2+Math.random()*2)+"s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(()=>{
+                heart.remove();
+            },5000);
+
+        },i*80);
+
+    }
+
+}
+
+
+const observer =
+    new IntersectionObserver(
+        entries=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add("visible");
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.15
+        }
+    );
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(el=>{
+        observer.observe(el);
+    });
+
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key.toLowerCase()==="m"){
+
+        if(audio.paused){
+
+            audio.play();
+
+        }else{
+
+            audio.pause();
+
+        }
+
+    }
+
+    if(e.key.toLowerCase()==="p"){
+
+        promiseReveal.classList.add("show");
+
+        promiseBtn.innerHTML =
+            "My Promise Is Always Open ♡";
+
+    }
+
+});
+
+
+window.addEventListener("mousemove",e=>{
+
+    const x =
+        (e.clientX/window.innerWidth-.5)*10;
+
+    const y =
+        (e.clientY/window.innerHeight-.5)*10;
+
+    document
+        .querySelectorAll(".aurora")
+        .forEach((el,index)=>{
+
+            const amount =
+                (index+1)*.8;
+
+            el.style.transform =
+                `translate(${x*amount}px,${y*amount}px)`;
+
+        });
+
+});
+
+</script>
+
+</body>
+</html>

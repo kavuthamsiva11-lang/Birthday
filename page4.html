@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Five Little Balloons | For My Akka</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#060713;color:#fff;font-family:Montserrat,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 15% 15%,rgba(132,78,255,.18),transparent 30%),radial-gradient(circle at 85% 20%,rgba(0,200,255,.13),transparent 28%),radial-gradient(circle at 50% 85%,rgba(255,70,150,.13),transparent 32%)}
+#fireworks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.7) 1px,transparent 1px),radial-gradient(circle,rgba(255,255,255,.3) 1px,transparent 1px);background-size:100px 100px,170px 170px;background-position:20px 20px,80px 60px;opacity:.35}
+.page{position:relative;z-index:2}
+.hero{min-height:100vh;padding:75px 20px 100px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.number{font-size:12px;letter-spacing:8px;color:#c8b3ff;margin-bottom:20px}
+h1{font-family:"Cormorant Garamond",serif;font-size:clamp(52px,9vw,105px);font-weight:500;line-height:.82;background:linear-gradient(120deg,#fff,#f2d5ff,#ffb8d5);-webkit-background-clip:text;color:transparent}
+.hero-sub{margin-top:25px;max-width:600px;color:#aaa7bd;font-size:12px;line-height:2;letter-spacing:2px;text-transform:uppercase}
+.balloon-zone{position:relative;width:min(1050px,100%);height:470px;margin-top:30px}
+.balloon{position:absolute;width:125px;height:160px;border-radius:55% 55% 48% 48%;cursor:pointer;box-shadow:inset -20px -22px 35px rgba(0,0,0,.18),inset 12px 12px 25px rgba(255,255,255,.25),0 18px 45px rgba(0,0,0,.35);transition:.3s;animation:float 4s ease-in-out infinite}
+.balloon:before{content:"";position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);width:18px;height:25px;background:inherit;clip-path:polygon(0 0,100% 0,50% 100%)}
+.balloon:after{content:"";position:absolute;top:100%;left:50%;height:210px;width:1px;background:linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.05))}
+.balloon:hover{transform:scale(1.1) rotate(2deg)}
+.b1{left:4%;top:110px;background:linear-gradient(145deg,#ff83a8,#d52363);animation-delay:.1s}
+.b2{left:24%;top:20px;background:linear-gradient(145deg,#a98aff,#6041d8);animation-delay:.8s}
+.b3{left:44%;top:115px;background:linear-gradient(145deg,#65ddff,#158cc9);animation-delay:1.3s}
+.b4{left:64%;top:25px;background:linear-gradient(145deg,#ffab82,#e6496e);animation-delay:.4s}
+.b5{right:4%;top:115px;background:linear-gradient(145deg,#72eab5,#159b72);animation-delay:1.6s}
+@keyframes float{0%,100%{margin-top:0}50%{margin-top:-18px}}
+.pop{animation:pop .5s forwards!important;pointer-events:none}
+@keyframes pop{0%{transform:scale(1);opacity:1}45%{transform:scale(1.25);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+.burst{position:absolute;width:8px;height:8px;border-radius:50%;pointer-events:none;animation:burst .8s forwards}
+@keyframes burst{to{transform:translate(var(--x),var(--y)) scale(.05);opacity:0}}
+.reveal{max-width:850px;opacity:0;transform:translateY(30px);transition:1.2s ease;margin-top:-25px}
+.reveal.show{opacity:1;transform:translateY(0)}
+.reveal-label{font-size:10px;letter-spacing:5px;color:#c9b4f4;text-transform:uppercase}
+.reveal h2{font-family:"Cormorant Garamond",serif;font-size:clamp(40px,6vw,70px);font-weight:500;margin-top:12px;background:linear-gradient(90deg,#fff,#ffc4dc,#d9c5ff);-webkit-background-clip:text;color:transparent}
+.reveal p{font-size:13px;color:#aaa6bb;line-height:1.9;margin-top:12px}
+.scroll{margin-top:50px;color:#777387;font-size:10px;letter-spacing:4px;animation:scroll 1.6s infinite}
+@keyframes scroll{50%{transform:translateY(8px);opacity:.5}}
+.section{padding:120px 20px;position:relative}
+.container{width:min(900px,100%);margin:auto}
+.section-label{text-align:center;font-size:10px;letter-spacing:6px;color:#bca6ed;text-transform:uppercase}
+.section-title{text-align:center;font-family:"Cormorant Garamond",serif;font-size:clamp(42px,7vw,70px);font-weight:500;margin-top:12px}
+.section-intro{text-align:center;max-width:650px;margin:20px auto 70px;color:#aaa7b9;font-size:13px;line-height:2}
+.heart-line{width:70px;height:1px;background:linear-gradient(90deg,transparent,#cbaefc,transparent);margin:25px auto}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{padding:35px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);backdrop-filter:blur(18px);border-radius:24px;opacity:0;transform:translateY(35px);transition:.8s ease}
+.card.show{opacity:1;transform:translateY(0)}
+.card-num{font-size:10px;color:#c6aef1;letter-spacing:3px}
+.card h3{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:500;margin:12px 0}
+.card p{font-size:12px;line-height:1.9;color:#aaa7b9}
+.lines{max-width:820px;margin:auto}
+.line{display:flex;gap:20px;padding:27px 0;border-bottom:1px solid rgba(255,255,255,.07);opacity:0;transform:translateY(25px);transition:.8s}
+.line.show{opacity:1;transform:translateY(0)}
+.line-number{min-width:40px;height:40px;border:1px solid rgba(204,175,255,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#d0b8ff}
+.line p{font-family:"Cormorant Garamond",serif;font-size:24px;line-height:1.4;color:#e7e2ed}
+.quote-area{text-align:center;padding:100px 20px}
+.quote{font-family:"Parisienne",cursive;font-size:clamp(35px,6vw,65px);line-height:1.3;color:#e9cce0;max-width:900px;margin:auto}
+.quote-small{font-size:11px;letter-spacing:3px;color:#777386;margin-top:25px;text-transform:uppercase}
+.letter{border:1px solid rgba(255,255,255,.1);background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border-radius:28px;padding:55px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.letter h3{font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:500;color:#f2dff0}
+.letter p{font-family:"Cormorant Garamond",serif;font-size:21px;line-height:1.8;color:#d1ccd8;margin-top:25px}
+.signature{font-family:"Parisienne",cursive;font-size:38px;color:#e3bdd6;margin-top:35px}
+.memory-list{display:flex;flex-direction:column;gap:16px}
+.memory{padding:25px 28px;border-left:2px solid #9f7be7;background:linear-gradient(90deg,rgba(150,100,255,.08),transparent);opacity:0;transform:translateX(-25px);transition:.8s}
+.memory.show{opacity:1;transform:translateX(0)}
+.memory h4{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500}
+.memory p{color:#a7a3b4;font-size:12px;line-height:1.8;margin-top:6px}
+.final{text-align:center;padding:130px 20px 80px}
+.final h2{font-family:"Cormorant Garamond",serif;font-size:clamp(45px,8vw,85px);font-weight:500}
+.final p{max-width:650px;margin:25px auto;color:#aaa7b9;line-height:2;font-size:13px}
+.final-highlight{font-family:"Parisienne",cursive;font-size:42px;color:#e5bfd8;margin-top:35px}
+.nav{display:flex;justify-content:center;gap:15px;margin-top:60px}
+.btn{padding:14px 28px;border:1px solid rgba(255,255,255,.14);border-radius:50px;color:#fff;text-decoration:none;font-size:10px;letter-spacing:2px;background:rgba(255,255,255,.04);transition:.3s}
+.btn:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+@media(max-width:700px){
+.balloon-zone{height:420px}
+.balloon{width:85px;height:115px}
+.b1{left:1%;top:130px}.b2{left:22%;top:35px}.b3{left:42%;top:140px}.b4{left:62%;top:45px}.b5{right:1%;top:135px}
+.balloon:after{height:165px}
+.cards{grid-template-columns:1fr}
+.card{padding:27px}
+.line p{font-size:21px}
+.letter{padding:30px 24px}
+.letter p{font-size:19px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+<div class="stars"></div>
+
+<div class="page">
+
+<section class="hero">
+<div class="number">04</div>
+<h1>Five Little<br>Balloons</h1>
+<div class="hero-sub">Touch each balloon and discover the little things I have always wanted to tell you.</div>
+
+<div class="balloon-zone" id="balloonZone">
+<div class="balloon b1" data-color="#ff5d91"></div>
+<div class="balloon b2" data-color="#8664ff"></div>
+<div class="balloon b3" data-color="#35c9ff"></div>
+<div class="balloon b4" data-color="#ff6878"></div>
+<div class="balloon b5" data-color="#38d79c"></div>
+</div>
+
+<div class="reveal" id="reveal">
+<div class="reveal-label">The Secret Behind Every Balloon</div>
+<h2>You are my favourite person in my life.</h2>
+<p>Five balloons. Five little secrets. One very special person.</p>
+</div>
+
+<div class="scroll">Scroll slowly ↓</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-label">A Little Truth</div>
+<h2 class="section-title">You Matter More Than You Know</h2>
+<div class="heart-line"></div>
+<p class="section-intro">Sometimes people don't realise how much space they have quietly taken inside someone's heart. You are one of those people for me.</p>
+
+<div class="cards">
+<div class="card"><div class="card-num">01</div><h3>A Safe Place</h3><p>Un kitta pesumbodhu unnecessary-ah edhaiyum hide panna vendam-nu feel aagum. That comfort itself is something special.</p></div>
+<div class="card"><div class="card-num">02</div><h3>A Beautiful Bond</h3><p>Namma relationship-ku same blood connection illa. Aana heart-la create aana connection sometimes adhukku mela meaningful-ah irukkum.</p></div>
+<div class="card"><div class="card-num">03</div><h3>A Constant</h3><p>Life-la neraya things change aagalam. Aana sila people oda place mattum change aagathu. Nee appadi oru person.</p></div>
+<div class="card"><div class="card-num">04</div><h3>A Blessing</h3><p>Unna meet pannadhu just another event illa. Enakku kidaicha beautiful relationships-la idhuvum onnu.</p></div>
+<div class="card"><div class="card-num">05</div><h3>A Memory Maker</h3><p>Periya events mattum memories aagathu. Chinna conversations, jokes, random moments ellam later priceless-ah maarum.</p></div>
+<div class="card"><div class="card-num">06</div><h3>My Favourite</h3><p>Favourite person-nu sollradhu one reason-kaga illa. Neraya little reasons together create pannina feeling adhu.</p></div>
+</div>
+</div>
+</section>
+
+<section class="quote-area">
+<div class="quote">“Some people enter our story quietly… and somehow become one of our favourite chapters.”</div>
+<div class="quote-small">For my dearest Akka</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-label">Ten Things</div>
+<h2 class="section-title">Things I Want You To Know</h2>
+<div class="heart-line"></div>
+
+<div class="lines">
+<div class="line"><div class="line-number">01</div><p>Unna maadhiri oru person en life-la irukkaradhu enakku romba periya blessing, Akka.</p></div>
+<div class="line"><div class="line-number">02</div><p>Blood relation illa naalum, namma bond enakku romba close-ah feel aagudhu.</p></div>
+<div class="line"><div class="line-number">03</div><p>Happy-ah irukkumbodhu share pannanum-nu thonra people-la nee oruthavanga.</p></div>
+<div class="line"><div class="line-number">04</div><p>Kashtama irukkumbodhu pesanum-nu thonra comfort people-la nee romba special.</p></div>
+<div class="line"><div class="line-number">05</div><p>Namma pesura chinna chinna conversations kooda enakku precious memories.</p></div>
+<div class="line"><div class="line-number">06</div><p>Sometimes oru simple message kooda en whole day-ah better pannidum.</p></div>
+<div class="line"><div class="line-number">07</div><p>Life-la neraya people meet pannalaam, aana ellarum heart-la permanent place edukka maataanga.</p></div>
+<div class="line"><div class="line-number">08</div><p>Unakku theriyama nee en life-la oru beautiful part-ah maaritta.</p></div>
+<div class="line"><div class="line-number">09</div><p>Time change aanaalum, places change aanaalum, namma bond enakku eppovume special dhaan.</p></div>
+<div class="line"><div class="line-number">10</div><p>Finally Akka, nee enakku kidaicha oru beautiful blessing. Unna life-la meet pannadhu always special.</p></div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-label">Our Little Memories</div>
+<h2 class="section-title">Things I Never Want To Forget</h2>
+<div class="heart-line"></div>
+<p class="section-intro">Some memories may look ordinary to everyone else. But to me, they carry a completely different meaning.</p>
+
+<div class="memory-list">
+<div class="memory"><h4>The Random Conversations</h4><p>Sometimes topic-e illaama pesina conversations kooda later remember pannumbodhu smile vara vaikkum.</p></div>
+<div class="memory"><h4>The Unexpected Laughs</h4><p>Plan pannama vandha sirippu moments dhaan sometimes best memories-ah maaridum.</p></div>
+<div class="memory"><h4>The Little Messages</h4><p>Oru simple “enna panra?” oru small reply kooda relationship-la oru little memory create pannum.</p></div>
+<div class="memory"><h4>The Understanding</h4><p>Everything explain panna vendama purinjukkura moments romba rare. Adhu enakku romba valuable.</p></div>
+<div class="memory"><h4>The Comfortable Silence</h4><p>Pesama irundhaalum awkward-ah feel aagama irukkura relationships romba special.</p></div>
+<div class="memory"><h4>The Ordinary Days</h4><p>Special occasions mattum illa. Ordinary days-la irundha simple moments dhaan sometimes heart-la longest stay aagum.</p></div>
+</div>
+</div>
+</section>
+
+<section class="quote-area">
+<div class="quote">“You don't have to be related by blood to be connected by heart.”</div>
+<div class="quote-small">A bond that feels like family</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-label">A Letter Within This Page</div>
+<h2 class="section-title">If I Could Say One More Thing</h2>
+<div class="heart-line"></div>
+
+<div class="letter">
+<h3>My Dearest Akka,</h3>
+<p>Sila relationships-ku exact definition kudukka mudiyadhu. Namma relationship-um appadi dhaan. Oru particular word-la explain panna mudiyadha alavukku many little feelings irukku.</p>
+<p>Sometimes naan yosippen, “Eppadi oru person ivlo important-ah maaritaanga?” nu. Answer simple. Big moment onnum illa. Daily life-la vandha countless little moments together dhaan.</p>
+<p>Un presence enakku always loud-ah irukkanum-nu illa. Sometimes just knowing that you are there is enough.</p>
+<p>Enakku happiness vandhaalum share panna thonum. Something funny nadandhaalum sollanum-nu thonum. Oru difficult day vandhaalum pesanum-nu thonum. That itself says how important you are.</p>
+<p>Namma bond eppadi start aachu-nu vida, adhu enakku enna meaning kudukkudhu-nu dhaan important.</p>
+<p>So on this special day, one thing mattum sollanum...</p>
+<p><b>Thank you for becoming one of the most beautiful people in my life.</b></p>
+<div class="signature">Always your Thambi</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-label">One Last Thought</div>
+<h2 class="section-title">Before You Leave This Page</h2>
+<div class="heart-line"></div>
+
+<div class="cards">
+<div class="card"><div class="card-num">A</div><h3>Keep Smiling</h3><p>Un smile unakku mattum illa, unna sutthi irukkura people-kum happiness kudukkum.</p></div>
+<div class="card"><div class="card-num">B</div><h3>Keep Dreaming</h3><p>Un goals, dreams, wishes ellam one by one beautiful-ah happen aaganum.</p></div>
+<div class="card"><div class="card-num">C</div><h3>Keep Being You</h3><p>Change aaganum-nu world sollalam. But un genuine self-a preserve pannradhu romba valuable.</p></div>
+<div class="card"><div class="card-num">D</div><h3>Keep The Memories</h3><p>Years pass aanaalum, indha little memories namma bond-ai remind pannattum.</p></div>
+</div>
+</div>
+</section>
+
+<section class="final">
+<div class="section-label">04 / End</div>
+<h2>This Page Is For You</h2>
+<p>Five balloons burst aayiduchu. Aana solla vendiya feelings innum neraya irukku. Indha website-la every page-um oru small piece of my heart. Every word has one simple meaning — you are special.</p>
+<div class="final-highlight">You are my favourite person in my life. 🤍</div>
+
+<div class="nav">
+<a href="page3.html" class="btn">← Previous</a>
+<a href="page5.html" class="btn">Next Chapter →</a>
+</div>
+</section>
+
+</div>
+
+<script>
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+let rockets=[];
+let particles=[];
+function resize(){
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+}
+resize();
+addEventListener("resize",resize);
+
+function rocket(){
+let x=Math.random()*canvas.width;
+let y=canvas.height+20;
+let tx=80+Math.random()*(canvas.width-160);
+let ty=60+Math.random()*canvas.height*.45;
+rockets.push({x,y,tx,ty,s:5+Math.random()*3});
+}
+function explosion(x,y){
+let amount=55+Math.floor(Math.random()*35);
+for(let i=0;i<amount;i++){
+let a=Math.random()*Math.PI*2;
+let s=1.5+Math.random()*5;
+particles.push({
+x,y,
+vx:Math.cos(a)*s,
+vy:Math.sin(a)*s,
+life:70+Math.random()*45,
+size:1+Math.random()*2,
+hue:Math.random()*360
+});
+}
+}
+function fireworks(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+for(let i=rockets.length-1;i>=0;i--){
+let r=rockets[i];
+let dx=r.tx-r.x;
+let dy=r.ty-r.y;
+let d=Math.hypot(dx,dy);
+r.x+=dx/d*r.s;
+r.y+=dy/d*r.s;
+ctx.beginPath();
+ctx.arc(r.x,r.y,2,0,Math.PI*2);
+ctx.fillStyle="rgba(255,255,255,.9)";
+ctx.fill();
+if(d<12){
+explosion(r.x,r.y);
+rockets.splice(i,1);
+}
+}
+for(let i=particles.length-1;i>=0;i--){
+let p=particles[i];
+p.x+=p.vx;
+p.y+=p.vy;
+p.vx*=.985;
+p.vy*=.985;
+p.vy+=.035;
+p.life--;
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle=`hsla(${p.hue},100%,75%,${Math.max(p.life/100,0)})`;
+ctx.fill();
+if(p.life<=0)particles.splice(i,1);
+}
+requestAnimationFrame(fireworks);
+}
+setInterval(rocket,850);
+fireworks();
+
+const balloons=document.querySelectorAll(".balloon");
+const zone=document.getElementById("balloonZone");
+const reveal=document.getElementById("reveal");
+let popped=0;
+
+balloons.forEach(balloon=>{
+balloon.addEventListener("click",()=>{
+if(balloon.classList.contains("pop"))return;
+balloon.classList.add("pop");
+popped++;
+
+let rect=balloon.getBoundingClientRect();
+let zr=zone.getBoundingClientRect();
+
+for(let i=0;i<25;i++){
+let s=document.createElement("span");
+s.className="burst";
+s.style.left=(rect.left-zr.left+rect.width/2)+"px";
+s.style.top=(rect.top-zr.top+rect.height/2)+"px";
+s.style.background=balloon.dataset.color;
+let a=Math.random()*Math.PI*2;
+let d=40+Math.random()*120;
+s.style.setProperty("--x",Math.cos(a)*d+"px");
+s.style.setProperty("--y",Math.sin(a)*d+"px");
+zone.appendChild(s);
+setTimeout(()=>s.remove(),900);
+}
+
+if(popped===5){
+setTimeout(()=>{
+reveal.classList.add("show");
+reveal.scrollIntoView({behavior:"smooth",block:"center"});
+},600);
+}
+});
+});
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting)entry.target.classList.add("show");
+});
+},{threshold:.15});
+
+document.querySelectorAll(".card,.line,.memory").forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
